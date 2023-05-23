@@ -4,9 +4,18 @@
   "description": "Proyecto de bienes raices utiizando MVC",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --watch index"
   },
-  "keywords": ["MVC", "Pug", "Tailwind", "MySQL", "Sequelize"],
+  "keywords": [
+    "MVC",
+    "Pug",
+    "Tailwind",
+    "MySQL",
+    "Sequelize"
+  ],
   "author": "Edgar Villegas @EddieVillegasB",
-  "license": "ISC"
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.18.2"
+  }
 }
