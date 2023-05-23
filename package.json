@@ -1,0 +1,12 @@
+{
+  "name": "bienesraices",
+  "version": "1.0.0",
+  "description": "Proyecto de bienes raices utiizando MVC",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": ["MVC", "Pug", "Tailwind", "MySQL", "Sequelize"],
+  "author": "Edgar Villegas @EddieVillegasB",
+  "license": "ISC"
+}
