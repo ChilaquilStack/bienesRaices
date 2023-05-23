@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Proyecto de bienes raices utiizando MVC",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "start": "node --watch index"
   },
