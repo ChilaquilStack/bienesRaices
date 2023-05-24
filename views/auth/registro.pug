@@ -21,4 +21,6 @@ block contenido
                     div
                         label(for="repetir_password").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Repetir Password
                         input(type="password", placeholder="Repetir tu password", name="repetir_password")#repetir_password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400
+                    .flex.items-center.justify-between
+                        a.text-gray-500.text-xs(href="/auth/login") Iniciar sesion
                     input(type="submit" value="Crear Cuenta" class="hover:bg-indigo-700").w-full.bg-indigo-600.text-white.font-bold.py-3.cursor-pointer
