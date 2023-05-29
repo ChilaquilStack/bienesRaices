@@ -11,7 +11,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(express.static('public'))
 app.use("/auth", usuarioRouter);
 
-const port = 3000;
+const port = process.env.PORT || 3000;
 
 app.listen(port, async () => {
     try {
