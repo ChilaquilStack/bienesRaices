@@ -19,7 +19,7 @@ export default async function ({ nombre, email, token }) {
         html: `
             <p>Hola ${nombre} comprueba tu cuenta en bienesRaizes.com</p>
             <p>Tu cuenta ya esta lista, solo debes confirmarla en ek siguiente enlace:
-            <a href='${process.env.URL}:${process.env.PORT}/auth/confirmar/${token}'>Confimar cuenta</a></p>
+            <a href='${process.env.HOST}:${process.env.PORT}/auth/confirmar/${token}'>Confimar cuenta</a></p>
             <p>Si tu no creaste esta cuenta, ignoara el mensaje<p>
         `
     });

@@ -6,11 +6,16 @@ const login = ( req, res ) => res.render('auth/login', {
     titulo: 'Iniciar sesion' 
 })
 
-const registro = ( req, res ) => res.render('auth/registro', {
-    titulo: "Crear cuenta"
-})
+const registro = ( req, res ) => {
+    res.render('auth/registro', {
+        titulo: "Crear cuenta",
+        csrfToken: req.csrfToken()
+    })
+}
 
 const registrar = async ( req, res ) => {
+
+    console.log(req.csrfToken)
 
     await check('nombre').notEmpty().withMessage("El nombre no puede estar vacio").run(req)
     await check('email').isEmail().withMessage("El email no es valido").run(req)
@@ -24,10 +29,12 @@ const registrar = async ( req, res ) => {
     if(!resultado.isEmpty()) {
         return res.render('auth/registro', {
             titulo: 'Crear cuenta',
+            csrfToken: req.csrfToken(),
             errores: resultado.array(),
             usuario: {
                 nombre,
                 email,
+                csrfToken: req.csrfToken()
             }
         })
     }
@@ -37,6 +44,7 @@ const registrar = async ( req, res ) => {
     if(existeUsuario) {
         return res.render('auth/registro', {
             titulo: 'Crear cuenta',
+            csrfToken: req.csrfToken(),
             errores: [{ msg: "El usuario ya existe" }],
             usuario: {
                 nombre,
@@ -45,28 +53,22 @@ const registrar = async ( req, res ) => {
         })
     }
 
-    try {
-        const usuario = await Usuario.create({
+    const usuario = await Usuario.create({
             ...req.body,
             token: Math.random().toString(32).substring(2) + Date.now().toString(32),
-        })
+    })
         
-        sendEmail({
-            nombre: usuario.nombre,
-            email: usuario.email,
-            token: usuario.token
-        })
+    sendEmail({
+        nombre: usuario.nombre,
+        email: usuario.email,
+        token: usuario.token
+    })
 
-        return res.render('templates/mensaje', {
-            titulo: 'Cuenta creada correctamente',
-            mensaje: 'Hemos enviado un email de confirmacion, presiona el enlace'
-        })
-    } catch (error) {
-        return res.render('templates/mensaje', {
-            titulo: 'Cuenta no creada',
-            mensaje: 'Hubo un error al crear tu cuenta, vulve a intentar'
-        })
-    }
+    return res.render('templates/mensaje', {
+        titulo: 'Cuenta creada correctamente',
+        mensaje: 'Hemos enviado un email de confirmacion, presiona el enlace',
+        // csrfToken: req.csrfToken(),
+    })
 }
 
 const confirmacion = async (req, res) => {
