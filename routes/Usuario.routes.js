@@ -1,9 +1,9 @@
 import { Router } from "express";
-import { confirmacion, login, registrar, registro, reset, resetForm } from "../controllers/usuario.controller.js";
+import { confirmacion, login, registrar, registro, reset, resetForm, autenticar } from "../controllers/usuario.controller.js";
 
 const router = Router()
 
-router.route("/login").get(login)
+router.route("/login").get(login).post(autenticar)
     
 router.route("/registro").get(registro).post(registrar)
 

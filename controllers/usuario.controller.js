@@ -3,8 +3,24 @@ import { check, validationResult } from "express-validator";
 import sendEmail from '../helpers/sendEmail.js';
 
 const login = ( req, res ) => res.render('auth/login', { 
-    titulo: 'Iniciar sesion' 
+    titulo: 'Iniciar sesion',
+    csrfToken: req.csrfToken()
 })
+
+const autenticar = async (req, res) => {
+    await check('email').isEmail().withMessage("El email no es valido").run(req)
+    await check('password').notEmpty().withMessage("El password no puede estar vacio").run(req)
+
+    const resultado = validationResult(req)
+
+    if(!resultado.isEmpty()) {
+        return res.render('auth/login', {
+            titulo: 'Iniciar sesion',
+            csrfToken: req.csrfToken(),
+            errores: resultado.array(),
+        })
+    }
+}
 
 const registro = ( req, res ) => {
     res.render('auth/registro', {
@@ -125,5 +141,5 @@ const reset = async (req, res) => {
 }
 
 export {
-    login, registro, reset, registrar, confirmacion, resetForm
+    login, registro, reset, registrar, confirmacion, resetForm, autenticar
 }
