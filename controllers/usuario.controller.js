@@ -15,8 +15,6 @@ const registro = ( req, res ) => {
 
 const registrar = async ( req, res ) => {
 
-    console.log(req.csrfToken)
-
     await check('nombre').notEmpty().withMessage("El nombre no puede estar vacio").run(req)
     await check('email').isEmail().withMessage("El email no es valido").run(req)
     await check('password').isLength({ min:6 }).withMessage("El password debe ser de minimo 6 caracteres").run(req)
@@ -67,7 +65,6 @@ const registrar = async ( req, res ) => {
     return res.render('templates/mensaje', {
         titulo: 'Cuenta creada correctamente',
         mensaje: 'Hemos enviado un email de confirmacion, presiona el enlace',
-        // csrfToken: req.csrfToken(),
     })
 }
 
@@ -96,10 +93,37 @@ const confirmacion = async (req, res) => {
 
 }
 
-const reset = ( req, res ) => res.render('auth/reset', {
-    titulo: "Recupera tu password"
+const resetForm = ( req, res ) => res.render('auth/reset', {
+    titulo: "Recupera tu password",
+    csrfToken: req.csrfToken(),
 })
 
+const reset = async (req, res) => {
+    await check('email').isEmail().withMessage("El email no es valido").run(req)
+
+    const resultado = validationResult(req);
+
+    if(!resultado.isEmpty()) {
+        return res.render('auth/reset', {
+            titulo: "Recupera tu password",
+            csrfToken: req.csrfToken(),
+            errores: resultado.array(),
+        })
+    }
+
+    const { email } = req.body
+
+    const usuario = await Usuario.findOne({where: { email }})
+
+    if(!usuario) {
+        return res.render('auth/reset', {
+            titulo: "Recupera tu password",
+            csrfToken: req.csrfToken(),
+            errores: [{msg: 'El email no pertenece a ningun usuario'}]
+        })
+    }
+}
+
 export {
-    login, registro, reset, registrar, confirmacion
+    login, registro, reset, registrar, confirmacion, resetForm
 }
