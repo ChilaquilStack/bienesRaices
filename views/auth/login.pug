@@ -16,12 +16,12 @@ block contenido
                 form.space-y-5(method="post" action="/auth/login")
                     input(type="hidden", name="_csrf" value=csrfToken)
                     div
-                        label(for="nombre").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Tu nombre
-                        input(type="text", placeholder="Tu nombre", name="nombre")#nombre.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400
+                        label(for="email").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Email
+                        input(type="email", placeholder="email", name="email")#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400
                     div
-                        label(for="email").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Email de Registro
-                        input(type="email", placeholder="Tu Email", name="email")#email.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400
+                        label(for="password").block.text-sm.uppercase.text-gray-500.mb-2.font-bold Password
+                        input(type="password", placeholder="password", name="password")#password.w-full.px-3.py-2.border.border-gray-300.rounded-md.placeholder-gray-400
                     .flex.items-center.justify-between
                         a.text-gray-500.text-xs(href="/auth/registro") Crear cuenta
                         a.text-gray-500.text-xs(href="/auth/reset") Recuperar password
-                    input(type="submit" value="Crear Cuenta" class="hover:bg-indigo-700").w-full.bg-indigo-600.text-white.font-bold.py-3.cursor-pointer
+                    input(type="submit" value="Iniciar Sesion" class="hover:bg-indigo-700").w-full.bg-indigo-600.text-white.font-bold.py-3.cursor-pointer

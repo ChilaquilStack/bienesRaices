@@ -20,6 +20,26 @@ const autenticar = async (req, res) => {
             errores: resultado.array(),
         })
     }
+
+    const { email, password } = req.body;
+
+    const usuario = await Usuario.findOne({ where: { email }});
+
+    if(!usuario) {
+        return res.render('auth/login', {
+            titulo: 'Iniciar sesion',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: "El usuario no existe" }],
+        })
+    }
+
+    if(!usuario.confirmado) {
+        return res.render('auth/login', {
+            titulo: 'Iniciar sesion',
+            csrfToken: req.csrfToken(),
+            errores: [{ msg: "Confirma tu cuenta" }],
+        })
+    }
 }
 
 const registro = ( req, res ) => {
