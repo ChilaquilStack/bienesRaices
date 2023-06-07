@@ -1,6 +1,7 @@
 import Usuario from '../models/User.model.js';
 import { check, validationResult } from "express-validator";
 import sendEmail from '../helpers/sendEmail.js';
+import jwt from 'jsonwebtoken';
 
 const login = ( req, res ) => res.render('auth/login', { 
     titulo: 'Iniciar sesion',
@@ -48,6 +49,20 @@ const autenticar = async (req, res) => {
             errores: [{ msg: "El password es incorrecto" }],
         })
     }
+
+    const token = jwt.sign({ id: usuario.id }, process.env.JWT_SECRET,{
+        expiresIn: '1d'
+    });
+
+    res
+    .cookie('token', token, {
+        expires: new Date(Date.now() + 86400000),
+        secure: false,
+        httpOnly: true,
+        sameSite: true        
+    })
+    .redirect('/');
+
 }
 
 const registro = ( req, res ) => {
